@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: HospitalManagementSystem
+Bundle-SymbolicName: HospitalManagementSystem
+Bundle-Version: 1.0.0.qualifier
+Export-Package: global.coda.hms.config,
+ global.coda.hms.constants,
+ global.coda.hms.controller,
+ global.coda.hms.dao,
+ global.coda.hms.delegate,
+ global.coda.hms.exceptionmapper,
+ global.coda.hms.exceptions,
+ global.coda.hms.helpers,
+ global.coda.hms.models,
+ global.coda.hms.services
