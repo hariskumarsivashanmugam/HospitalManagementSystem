@@ -28,7 +28,7 @@ import global.coda.hms.models.User;
 public class DoctorDao {
 
 	/** The logger. */
-	private final Logger logger = LogManager.getLogger(PatientDao.class);
+	private final Logger logger = LogManager.getLogger(DoctorDao.class);
 
 	/**
 	 * Read doctor dao.
@@ -38,7 +38,7 @@ public class DoctorDao {
 	 * @throws SQLException the SQL exception
 	 * @throws SystemException the system exception
 	 */
-	public Doctor readDoctorDao(int doctorId)
+	public Doctor readDoctor(int doctorId)
 	    throws SQLException,
 	    SystemException {
 		logger.traceEntry(Integer.toString(doctorId));
@@ -108,12 +108,12 @@ public class DoctorDao {
 	 * @throws SQLException the SQL exception
 	 * @throws SystemException the system exception
 	 */
-	public Doctor createDoctorDao(Doctor doctor)
+	public Doctor createDoctor(Doctor doctor)
 	    throws SQLException,
 	    SystemException {
 		logger.traceEntry(doctor.toString());
-		int rowsChangedForDoctor = 0;
-		int rowsChangedForUser = 0;
+		int doctorExecute = 0;
+		int userExecute = 0;
 		Connection databaseConnection = DBConfig.establishConnection();
 		try {
 			databaseConnection.setAutoCommit(false);
@@ -121,16 +121,16 @@ public class DoctorDao {
 			    .prepareStatement(QueryConstants.USER_INSERT,
 			        Statement.RETURN_GENERATED_KEYS);
 			setUserDetails(preparedStatementForUser, doctor);
-			rowsChangedForUser = preparedStatementForUser.executeUpdate();
-			if (rowsChangedForUser == 1) {
+			userExecute = preparedStatementForUser.executeUpdate();
+			if (userExecute == 1) {
 				if (setIdForUser(preparedStatementForUser, doctor)) {
 
 					PreparedStatement preparedStatementForDoctor = databaseConnection
 					    .prepareStatement(QueryConstants.DOCTOR_INSERT,
 					        Statement.RETURN_GENERATED_KEYS);
 					setDoctorDetails(preparedStatementForDoctor, doctor);
-					rowsChangedForDoctor = preparedStatementForDoctor.executeUpdate();
-					if (rowsChangedForDoctor == 1) {
+					doctorExecute = preparedStatementForDoctor.executeUpdate();
+					if (doctorExecute == 1) {
 						if (setIdForDoctor(preparedStatementForDoctor, doctor)) {
 
 							databaseConnection.commit();
@@ -255,13 +255,13 @@ public class DoctorDao {
 	 * @throws SQLException the SQL exception
 	 * @throws SystemException the system exception
 	 */
-	public Doctor updateDoctorDao(Doctor doctor)
+	public Doctor updateDoctor(Doctor doctor)
 	    throws SQLException,
 	    SystemException {
 		logger.traceEntry(doctor.toString());
 		int rowsChangedForDoctor = 0, rowsChangedForUser = 0;
 		Doctor checkDoctor = null;
-		checkDoctor = readDoctorDao(doctor.getUserId());
+		checkDoctor = readDoctor(doctor.getUserId());
 		if (checkDoctor != null) {
 			Connection databaseConnection = DBConfig.establishConnection();
 			try {
@@ -304,7 +304,7 @@ public class DoctorDao {
 	 * @throws SQLException the SQL exception
 	 * @throws SystemException the system exception
 	 */
-	public String deleteDoctorDao(int doctorId)
+	public String deleteDoctor(int doctorId)
 	    throws SQLException,
 	    SystemException {
 		logger.traceEntry(Integer.toString(doctorId));
@@ -331,7 +331,7 @@ public class DoctorDao {
 	 * @throws SQLException the SQL exception
 	 * @throws SystemException the system exception
 	 */
-	public List<User> trackMyPatientDoctorDao(int doctorId)
+	public List<User> trackMyPatientInDoctor(int doctorId)
 	    throws SQLException,
 	    SystemException {
 		logger.traceEntry(Integer.toString(doctorId));
@@ -397,7 +397,7 @@ public class DoctorDao {
 		for (int iterator : arrayList) {
 			DoctorPatientList doctorpatient = new DoctorPatientList();
 			doctorpatient.setDoctorId(iterator);
-			doctorpatient.setData(trackMyPatientDoctorDao(iterator));
+			doctorpatient.setData(trackMyPatientInDoctor(iterator));
 			doctorPatientList.add(doctorpatient);
 		}
 		logger.traceExit(allpatient.toString());

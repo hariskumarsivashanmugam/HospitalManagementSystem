@@ -46,7 +46,7 @@ public class DoctorHelper {
 		logger.traceEntry(Integer.toString(doctorId));
 		Doctor doctor;
 		try {
-			doctor = doctorDao.readDoctorDao(doctorId);
+			doctor = doctorDao.readDoctor(doctorId);
 			if (doctor == null) {
 				throw new DoctorNotFound(ApplicationConstants.DOCTOR_NOT_FOUND);
 			}
@@ -72,7 +72,7 @@ public class DoctorHelper {
 	    Exception {
 		logger.traceEntry(doctor.toString());
 		try {
-			Doctor doctors = doctorDao.createDoctorDao(doctor);
+			Doctor doctors = doctorDao.createDoctor(doctor);
 			logger.traceExit(doctor);
 			return doctors;
 		} catch (SQLException e) {
@@ -95,7 +95,7 @@ public class DoctorHelper {
 	    Exception {
 		logger.traceEntry(doctor.toString());
 		try {
-			Doctor doctors = doctorDao.updateDoctorDao(doctor);
+			Doctor doctors = doctorDao.updateDoctor(doctor);
 			if (doctors == null) {
 				throw new DoctorNotFound(ApplicationConstants.DOCTOR_NOT_FOUND);
 			}
@@ -121,7 +121,7 @@ public class DoctorHelper {
 	    Exception {
 		logger.traceEntry(Integer.toString(doctorId));
 		try {
-			String doctors = doctorDao.deleteDoctorDao(doctorId);
+			String doctors = doctorDao.deleteDoctor(doctorId);
 			logger.traceExit(doctors);
 			return doctors;
 		} catch (SQLException e) {
@@ -144,7 +144,7 @@ public class DoctorHelper {
 	    Exception {
 		logger.traceEntry(Integer.toString(doctorId));
 		try {
-			List<User> list = doctorDao.trackMyPatientDoctorDao(doctorId);
+			List<User> list = doctorDao.trackMyPatientInDoctor(doctorId);
 			if (list == null) {
 				throw new DoctorNotFound(ApplicationConstants.DOCTOR_NOT_FOUND);
 			}

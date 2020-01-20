@@ -126,7 +126,7 @@ public class DoctorServices {
 	@Path("deleteDoctor/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public ResponseObject<String> deletePatient(@PathParam("id") String doctorId)
+	public ResponseObject<String> deleteDoctor(@PathParam("id") String doctorId)
 	    throws Exception {
 		logger.traceEntry(doctorId);
 		stringResponse.setStatusCode(ApplicationConstants.STATUS_200);

@@ -15,7 +15,6 @@ import global.coda.hms.exceptions.PatientNotFound;
 import global.coda.hms.exceptions.SystemException;
 import global.coda.hms.models.Patient;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class PatientHelper.
  */
@@ -39,7 +38,7 @@ public class PatientHelper {
 		logger.traceEntry(Integer.toString(patientId));
 		Patient patient;
 		try {
-			patient = patientDao.readPatientDao(patientId);
+			patient = patientDao.readPatient(patientId);
 			if (patient == null) {
 				throw new PatientNotFound(ApplicationConstants.PATIENT_NOT_FOUND);
 			}
@@ -69,7 +68,7 @@ public class PatientHelper {
 		logger.traceEntry(patient.toString());
 		Patient patients;
 		try {
-			patients = patientDao.createPatientDao(patient);
+			patients = patientDao.createPatient(patient);
 			logger.traceExit(patients);
 			return patients;
 		} catch (SQLException e) {
@@ -89,7 +88,7 @@ public class PatientHelper {
 		logger.traceEntry(patient.toString());
 		Patient patients;
 		try {
-			patients = patientDao.updatePatientDao(patient);
+			patients = patientDao.updatePatient(patient);
 			if (patients == null) {
 				throw new PatientNotFound(ApplicationConstants.PATIENT_NOT_FOUND);
 			}
@@ -117,7 +116,7 @@ public class PatientHelper {
 	    Exception {
 		logger.traceEntry(Integer.toString(patientId));
 		try {
-			String patients = patientDao.deletePatientDao(patientId);
+			String patients = patientDao.deletePatient(patientId);
 			logger.traceExit(patients);
 			return patients;
 		} catch (SQLException e) {

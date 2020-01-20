@@ -39,7 +39,7 @@ public class PatientDao {
 	 * @throws SystemException the system exception
 	 * @throws Exception the exception
 	 */
-	public Patient readPatientDao(int patientId)
+	public Patient readPatient(int patientId)
 	    throws SQLException,
 	    ClassNotFoundException,
 	    SystemException {
@@ -111,12 +111,12 @@ public class PatientDao {
 	 * @throws SQLException the SQL exception
 	 * @throws SystemException the system exception
 	 */
-	public Patient createPatientDao(Patient patient)
+	public Patient createPatient(Patient patient)
 	    throws SQLException,
 	    SystemException {
 		logger.traceEntry(patient.toString());
-		int rowsChangedForPatient = 0;
-		int rowsChangedForUser = 0;
+		int executePatient = 0;
+		int executeUser = 0;
 		Connection databaseConnection = DBConfig.establishConnection();
 		try {
 			databaseConnection.setAutoCommit(false);
@@ -124,16 +124,16 @@ public class PatientDao {
 			    .prepareStatement(QueryConstants.USER_INSERT,
 			        Statement.RETURN_GENERATED_KEYS);
 			setUserDetails(preparedStatementForUser, patient);
-			rowsChangedForUser = preparedStatementForUser.executeUpdate();
-			if (rowsChangedForUser == 1) {
+			executeUser = preparedStatementForUser.executeUpdate();
+			if (executeUser == 1) {
 				if (setIdForUser(preparedStatementForUser, patient)) {
 
 					PreparedStatement preparedStatementforPatient = databaseConnection
 					    .prepareStatement(QueryConstants.PATIENT_INSERT,
 					        Statement.RETURN_GENERATED_KEYS);
 					setPatientDetails(preparedStatementforPatient, patient);
-					rowsChangedForPatient = preparedStatementforPatient.executeUpdate();
-					if (rowsChangedForPatient == 1) {
+					executePatient = preparedStatementforPatient.executeUpdate();
+					if (executePatient == 1) {
 						if (setIdForPatient(preparedStatementforPatient, patient)) {
 
 							databaseConnection.commit();
@@ -268,14 +268,14 @@ public class PatientDao {
 	 * @throws ClassNotFoundException classNotFound
 	 * @throws Exception the exception Exception
 	 */
-	public Patient updatePatientDao(Patient patient)
+	public Patient updatePatient(Patient patient)
 	    throws ClassNotFoundException,
 	    SQLException,
 	    SystemException {
 		logger.traceEntry(patient.toString());
 		int rowsChangedForPatient = 0, rowsChangedForUser = 0;
 		Patient patientToBeUpdated = null;
-		patientToBeUpdated = readPatientDao(patient.getUserId());
+		patientToBeUpdated = readPatient(patient.getUserId());
 		if (patientToBeUpdated != null) {
 			Connection databaseConnection = DBConfig.establishConnection();
 			databaseConnection.setAutoCommit(false);
@@ -311,7 +311,7 @@ public class PatientDao {
 	 * @throws SQLException the SQL exception
 	 * @throws SystemException the system exception
 	 */
-	public String deletePatientDao(int patientId)
+	public String deletePatient(int patientId)
 	    throws SQLException,
 	    SystemException {
 		logger.traceEntry(Integer.toString(patientId));
